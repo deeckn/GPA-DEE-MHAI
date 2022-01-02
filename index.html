@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA DEE MHAI</title>
+    <link rel="stylesheet" href="/app.css">
+</head>
+
+<body>
+    <main id="main-frame">
+        <header>GPA DEE MHAI</header>
+        <ul class="subjectGrades">
+            <li class="subjectItem">
+                <label for="grade">Select Grade:</label>
+                <select name="grade">
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C+">C+</option>
+                    <option value="C">C</option>
+                    <option value="D+">D+</option>
+                    <option value="D">D</option>
+                </select>
+
+                <label for="credit">Input Credit:</label>
+                <input type="text" class="creditInput">
+                <input type="submit" value="Add" class="submitButton">
+            </li>
+        </ul>
+        <footer>
+            <span>Your current GPA is 0.00</span>
+            <button>Clear All</button>
+        </footer>
+    </main>
+
+    <script src="/app.js"></script>
+</body>
+
+</html>

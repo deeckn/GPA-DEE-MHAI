@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    background-color: paleturquoise;
+}
+
+#main-frame {
+    margin: 120px auto;
+    max-width: 800px;
+    width: 100%;
+    background-color: white;
+    padding: 50px;
+    border-radius: 10px;
+}
+
+header {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: rgb(106, 164, 230);
+}
+
+.subjectItem {
+    list-style: none;
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 0 15px;
+    overflow: hidden;
+}
+
+li select {
+    margin: 0 8px;
+}
+
+.subjectItem .submitButton {
+    margin-left: 8px;
+    width: 60px;
+    border: none;
+    background-color: #3ce775;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 500ms;
+}
+
+.subjectItem #submitButton:hover {
+    background-color: #31bb5f;
+}
+
+footer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+footer button {
+    border: none;
+    outline: none;
+    background-color: #e74c3c;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 1rem;
+    transition: 500ms;
+}
+
+footer button:hover {
+    background-color: #bb3e30;
+}

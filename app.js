@@ -1,58 +1,96 @@
 
-function makeInputForm() {
-    const ul = document.querySelector(".subjectGrades");
-    const formContainer = document.createElement("li");
-    const gradeLabel = document.createElement("label");
-    const comboBox = document.createElement("select");
-    const a = document.createElement("option");
-    const bPlus = document.createElement("option");
-    const b = document.createElement("option");
-    const cPlus = document.createElement("option");
-    const c = document.createElement("option");
-    const dPlus = document.createElement("option");
-    const d = document.createElement("option");
-    const creditLabel = document.createElement("label");
-    const creditInput = document.createElement("input");
-    const submitButton = document.createElement("input");
+// Globals
+let totalSum = 0;
+let totalCredits = 0;
+let gpa = 0;
 
-    gradeLabel.htmlFor = "grade";
-    gradeLabel.innerHTML = "Select Grade:";
+// HTML Page Elements
+const ul = document.querySelector(".subjectGrades");
+const form = document.querySelector(".subjectForm");
+const subjectInput = document.querySelector(".subjectInput");
+const gradeInput = document.querySelector(".gradeSelector");
+const creditInput = document.querySelector(".creditInput");
+const clearAllButton = document.querySelector("footer button");
 
-    a.value = "A";
-    a.innerHTML = "A";
-    bPlus.value = "B+";
-    bPlus.innerHTML = "B+";
-    b.value = "B";
-    b.innerHTML = "B";
-    cPlus.value = "C+";
-    cPlus.innerHTML = "C+";
-    c.value = "C";
-    c.innerHTML = "C";
-    dPlus.value = "D+";
-    dPlus.innerHTML = "D+";
-    d.value = "D";
-    d.innerHTML = "D";
-    comboBox.name = "grade";
-    comboBox.appendChild(a);
-    comboBox.appendChild(bPlus);
-    comboBox.appendChild(b);
-    comboBox.appendChild(cPlus);
-    comboBox.appendChild(c);
-    comboBox.appendChild(dPlus);
-    comboBox.appendChild(d);
 
-    creditLabel.innerHTML = "Input Credit:";
+function showSubjectInfo(subjectName, grade, credit) {
+    const subjectItem = document.createElement("li");
+    const text = document.createElement("p");
 
-    submitButton.type = "submit";
+    subjectItem.classList.add("subjectItem");
+    text.textContent = `${subjectName} | ${grade} | ${credit} Credits`;
+    subjectItem.appendChild(text);
 
-    formContainer.appendChild(gradeLabel);
-    formContainer.appendChild(comboBox);
-    formContainer.appendChild(creditLabel);
-    formContainer.appendChild(creditInput);
-    formContainer.appendChild(submitButton);
-    formContainer.classList.add("subjectItem");
-    ul.appendChild(formContainer);
+    let trashIconSpan = document.createElement("span");
+    trashIconSpan.classList.add("trashIcon");
+    trashIconSpan.addEventListener('click', () => {
+        // TODO
+    });
+
+    let trashIcon = document.createElement("i");
+    trashIcon.classList.add("fas");
+    trashIcon.classList.add("fa-trash");
+
+    trashIconSpan.appendChild(trashIcon);
+    subjectItem.appendChild(trashIconSpan);
+    form.remove();
+    ul.appendChild(subjectItem);
+    ul.appendChild(form);
 }
 
-makeInputForm();
-makeInputForm();
+const gradeGPA = {
+    "A": 4.00,
+    "B+": 3.5,
+    "B": 3.0,
+    "C+": 2.5,
+    "C": 2.0,
+    "D+": 1.5,
+    "D": 1
+}
+
+function cumulate(grade, credit) {
+    totalSum += gradeGPA[grade] * credit;
+    totalCredits += parseInt(credit);;
+}
+
+
+function calculateGPA() {
+    gpa = totalSum / totalCredits;
+}
+
+
+function updateResult() {
+    const outputSpan = document.querySelector("footer span");
+    outputSpan.textContent = `Your current GPA is ${gpa.toPrecision(3)}`;
+}
+
+
+function clearForm() {
+    subjectInput.value = "";
+    creditInput.value = "";
+}
+
+const submitButton = document.querySelector(".submitButton");
+submitButton.addEventListener('click', () => {
+    let subjectName = subjectInput.value;
+    let grade = gradeInput.value;
+    let credit = creditInput.value;
+
+    if (subjectName === "" || credit === "" || credit === 0) return;
+
+    cumulate(grade, credit);
+    calculateGPA();
+    updateResult();
+    clearForm();
+    showSubjectInfo(subjectName, grade, credit);
+});
+
+clearAllButton.addEventListener("click", () => {
+    let tasks = Array.prototype.slice.call(ul.children);
+    tasks.forEach(subject => { subject.remove(); });
+    gpa = 0;
+    totalCredits = 0;
+    totalSum = 0;
+    ul.appendChild(form);
+    updateResult();
+});

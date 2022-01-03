@@ -1,7 +1,7 @@
 # GPA-DEE-MHAI
 
-An university GPA calculator.\
-Inspiration: Its hard to find an online GPA calculator with the same grading system as my country. So, why not build my own GPA calculator?
+A university GPA calculator.\
+Inspiration: It's hard to find an online GPA calculator with the same grading system as my country. So, why not build my own GPA calculator?
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/40157947/147935491-1a466011-5d6e-49c1-a9ae-8a8aee2b8ac1.png" width="auto">

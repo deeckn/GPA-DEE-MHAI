@@ -1,5 +1,5 @@
 
-// Globals
+// Global Variables
 let totalSum = 0;
 let totalCredits = 0;
 let gpa = 0;
@@ -10,10 +10,12 @@ const form = document.querySelector(".subjectForm");
 const subjectInput = document.querySelector(".subjectInput");
 const gradeInput = document.querySelector(".gradeSelector");
 const creditInput = document.querySelector(".creditInput");
+const submitButton = document.querySelector(".submitButton");
 const clearAllButton = document.querySelector("footer button");
 
 
 function showSubjectInfo(subjectName, grade, credit) {
+    // HTML Element Creation
     const subjectItem = document.createElement("li");
     const text = document.createElement("p");
 
@@ -21,12 +23,22 @@ function showSubjectInfo(subjectName, grade, credit) {
     text.textContent = `${subjectName} | ${grade} | ${credit} Credits`;
     subjectItem.appendChild(text);
 
+    // Trash Icon Slide in and functionality
     let trashIconSpan = document.createElement("span");
     trashIconSpan.classList.add("trashIcon");
     trashIconSpan.addEventListener('click', () => {
-        // TODO
+        const textContainer = trashIconSpan.previousSibling;
+        let text = textContainer.textContent;
+        let subjectName = text.split("|")[0].trim();
+        reduceSubjectGPA(subjectData[subjectName][0], subjectData[subjectName][1]);
+        calculateGPA();
+        updateResult();
+
+        // Deleting Subject Item from page
+        subjectItem.remove();
     });
 
+    // Trash Icon Visual
     let trashIcon = document.createElement("i");
     trashIcon.classList.add("fas");
     trashIcon.classList.add("fa-trash");
@@ -48,20 +60,40 @@ const gradeGPA = {
     "D": 1
 }
 
+let subjectData = {};
+
+
+function addSubjectData(subjectName, grade, credit) {
+    subjectData[subjectName] = [grade, credit];
+}
+
+
 function cumulate(grade, credit) {
-    totalSum += gradeGPA[grade] * credit;
-    totalCredits += parseInt(credit);;
+    totalSum += gradeGPA[grade] * parseInt(credit);
+    totalCredits += parseInt(credit);
+}
+
+
+function reduceSubjectGPA(grade, credit) {
+    totalSum -= gradeGPA[grade] * parseInt(credit);
+    totalCredits -= parseInt(credit);
 }
 
 
 function calculateGPA() {
+    if (totalCredits === 0) {
+        gpa = 0;
+        return;
+    }
     gpa = totalSum / totalCredits;
 }
 
 
 function updateResult() {
     const outputSpan = document.querySelector("footer span");
-    outputSpan.textContent = `Your current GPA is ${gpa.toPrecision(3)}`;
+
+    if (gpa === 0) outputSpan.textContent = "Add subjects to calculate GPA";
+    else outputSpan.textContent = `Your current GPA is ${gpa.toPrecision(3)}`;
 }
 
 
@@ -70,19 +102,35 @@ function clearForm() {
     creditInput.value = "";
 }
 
-const submitButton = document.querySelector(".submitButton");
-submitButton.addEventListener('click', () => {
-    let subjectName = subjectInput.value;
-    let grade = gradeInput.value;
-    let credit = creditInput.value;
 
+function addSubject(subjectName, grade, credit) {
     if (subjectName === "" || credit === "" || credit === 0) return;
 
+    addSubjectData(subjectName, grade, credit);
     cumulate(grade, credit);
     calculateGPA();
     updateResult();
     clearForm();
     showSubjectInfo(subjectName, grade, credit);
+}
+
+
+// Event Listeners
+
+creditInput.addEventListener('keydown', (event) => {
+    if (event.key === "Enter") {
+        let subjectName = (subjectInput.value).trim();
+        let grade = gradeInput.value;
+        let credit = creditInput.value;
+        addSubject(subjectName, grade, credit);
+    }
+});
+
+submitButton.addEventListener('click', () => {
+    let subjectName = (subjectInput.value).trim();
+    let grade = gradeInput.value;
+    let credit = creditInput.value;
+    addSubject(subjectName, grade, credit);
 });
 
 clearAllButton.addEventListener("click", () => {

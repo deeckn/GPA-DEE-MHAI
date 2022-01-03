@@ -15,7 +15,7 @@ body {
 
 #main-frame {
     margin: 120px auto;
-    max-width: 800px;
+    max-width: 900px;
     width: 100%;
     background-color: white;
     padding: 50px;
@@ -26,6 +26,7 @@ header {
     font-size: 2.5rem;
     font-weight: 700;
     color: rgb(106, 164, 230);
+    margin-bottom: 1rem;
 }
 
 .subjectItem {
@@ -42,6 +43,18 @@ header {
 
 li select {
     margin: 0 8px;
+    font-size: 16px;
+}
+
+li input {
+    margin: 0 8px;
+    max-width: 15%;
+    padding-left: 5px;
+    font-size: 16px;
+}
+
+li button {
+    font-size: 16px;
 }
 
 .subjectItem .submitButton {
@@ -56,8 +69,32 @@ li select {
     transition: 500ms;
 }
 
-.subjectItem #submitButton:hover {
+.subjectItem .submitButton:hover {
     background-color: #31bb5f;
+}
+
+.subjectItem:hover .trashIcon {
+    right: 0;
+}
+
+.trashIcon {
+    position: absolute;
+    right: -45px;
+    color: white;
+    background-color: #e74c3c;
+    width: 45px;
+    text-align: center;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: 500ms;
+}
+
+.trashIcon:hover {
+    background-color: #bb3e30;
+}
+
+p {
+    display: inline;
 }
 
 footer {
